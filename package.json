@@ -1,0 +1,16 @@
+{
+  "name": "identityservice",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Amit Gupta",
+  "type": "module",
+  "main": "start.mjs",
+  "scripts": {
+    "runlocal": "node --env-file=./serverlocal/.env start.mjs"
+  },
+  "dependencies": {
+    "console-stamp": "^3.0.0",
+    "lmdb": "^2.6.1"
+  }
+}
