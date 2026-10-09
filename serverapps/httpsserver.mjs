@@ -17,7 +17,7 @@ const mimeTypes = {
 const options = {
     key: fs.readFileSync(path.resolve(import.meta.dirname, process.env.ssl_key)),
     cert: fs.readFileSync(path.resolve(import.meta.dirname, process.env.ssl_cert)),
-    minVersion: 'TLSv1.2',
+    minVersion: 'TLSv1.1',
     maxVersion: 'TLSv1.3'
 };
 
@@ -28,8 +28,9 @@ const httpsServer = https.createServer(options, handleRequests);
 
 const allowedOrigins = [
     'http://localhost:1025', // Your live production frontend domain  
-    'https://0.0.0.0:1030',  // Alternative local development port
-    'https://13.235.102.236:1026',
+    'https://0.0.0.0:1031',  // Alternative local development port
+    'https://13.235.102.236:1029',
+    'http://13.235.102.236:1028',
     'https://d326ndd7qg08xl.cloudfront.net'
 ];
 
@@ -53,6 +54,7 @@ function handleRequests(req, res) {
 
         // CRITICAL: Set to true if you plan to transmit HTTP-Only session cookies or authorization tokens
         res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Access-Control-Allow-Private-Network', 'true');
 
         // Explicitly allow methods and headers required by your hybrid crypto mechanism
         res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');

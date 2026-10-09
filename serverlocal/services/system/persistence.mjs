@@ -25,15 +25,19 @@ class PersistenceService extends SystemService {
 
     getId(key) 
     {
-       const app = this.ids[key];
-        if (app.mode !== 'HISTORY') 
-            for (const [i, e] of app.oExpiries.entries()) {
-                app.oExpiries[i] = this.expiries['options'][e];
+        const app = this.ids[key];
+        const appClone = structuredClone(app);
+        const stockCode = appClone.stockCode;
+        if (appClone.mode !== 'HISTORY') {
+            appClone.fExpiry = this.expiries[stockCode]['futures']['FIRST'];
+            for (const [i, e] of appClone.oExpiries.entries()) {
+                appClone.oExpiries[i] = this.expiries[stockCode]['options'][e];
             }
+        }
         else
-            app.simStartTime = new Date(app.simStartTime).getTime();
+            appClone.simStartTime = new Date(app.simStartTime).getTime();
 
-        return app;
+        return appClone;
     }
 }
 
