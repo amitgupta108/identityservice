@@ -17,7 +17,7 @@ const mimeTypes = {
 const options = {
     key: fs.readFileSync(path.resolve(import.meta.dirname, process.env.ssl_key)),
     cert: fs.readFileSync(path.resolve(import.meta.dirname, process.env.ssl_cert)),
-    minVersion: 'TLSv1.1',
+    minVersion: 'TLSv1.2',
     maxVersion: 'TLSv1.3'
 };
 
@@ -28,10 +28,10 @@ const httpsServer = https.createServer(options, handleRequests);
 
 const allowedOrigins = [
     'http://localhost:1025', // Your live production frontend domain  
-    'https://0.0.0.0:1031',  // Alternative local development port
     'https://13.235.102.236:1029',
     'http://13.235.102.236:1028',
-    'https://d326ndd7qg08xl.cloudfront.net'
+    'https://d326ndd7qg08xl.cloudfront.net',
+    'http://127.0.0.1:3000'
 ];
 
 export function startserver() {
@@ -60,8 +60,8 @@ function handleRequests(req, res) {
         res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
 
-        // Cache the preflight response details in the browser for 10 minutes to save overhead
-        res.setHeader('Access-Control-Max-Age', '600');
+        // Cache the preflight response details in the browser for 100 minutes to save overhead
+        res.setHeader('Access-Control-Max-Age', '6000');
     }
 
     // Prevent directory traversal attacks
