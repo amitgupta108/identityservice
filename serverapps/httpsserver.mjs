@@ -110,7 +110,7 @@ async function handleAPIReq(req, res) {
 
     if (path === '/api/get' && req.method === 'GET') {
         const key = query.get('key');
-        const wrapper = persistenceservice.getId(key);
+        const wrapper = persistenceservice.getProfile(key);
         res.writeHead(200);
         res.end(JSON.stringify(wrapper));
     }

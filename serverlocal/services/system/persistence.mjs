@@ -23,12 +23,13 @@ class PersistenceService extends SystemService {
         return await this.store.put(key, value);
     }
 
-    getId(key) 
+    getProfile(key) 
     {
         const app = this.ids[key];
         const appClone = structuredClone(app);
         const stockCode = appClone.stockCode;
         if (appClone.mode !== 'HISTORY') {
+            appClone.simStartTime = Date.now();
             appClone.fExpiry = this.expiries[stockCode]['futures']['FIRST'];
             for (const [i, e] of appClone.oExpiries.entries()) {
                 appClone.oExpiries[i] = this.expiries[stockCode]['options'][e];
