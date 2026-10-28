@@ -6,6 +6,7 @@ class PersistenceService extends SystemService {
     constructor(name) {
         super(name);
         this.ids = store.ids;
+        this.profiles = store.profiles;
         this.expiries = store.expiries;
     }
 
@@ -23,10 +24,12 @@ class PersistenceService extends SystemService {
         return await this.store.put(key, value);
     }
 
-    getProfile(key) 
-    {
+    getProfile(key) {
         const app = this.ids[key];
-        const appClone = structuredClone(app);
+        const appid = app.appid;
+        const profile = this.profiles[app.profile];
+
+        const appClone = structuredClone({ ...profile, appid: appid });
         const stockCode = appClone.stockCode;
         if (appClone.mode !== 'HISTORY') {
             appClone.simStartTime = Date.now();
